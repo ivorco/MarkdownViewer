@@ -29,11 +29,13 @@ export function Viewer({ content, filePath }: ViewerProps): React.JSX.Element {
           {filePath}
         </p>
       </header>
-      <div
-        className="markdown-body"
-        dangerouslySetInnerHTML={{ __html: html }}
-        onClick={handleClick}
-      />
+      <main className="viewer-content">
+        <div
+          className="markdown-body"
+          dangerouslySetInnerHTML={{ __html: html }}
+          onClick={handleClick}
+        />
+      </main>
     </article>
   )
 }

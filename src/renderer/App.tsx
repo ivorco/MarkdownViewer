@@ -1,12 +1,15 @@
+import type { MarkdownReadErrorCode } from '@shared/api'
 import { useEffect, useState } from 'react'
-import { ErrorState, getReadErrorMessage } from './components/ErrorState'
+import { EmptyState } from './components/EmptyState'
+import { ErrorState, getReadError } from './components/ErrorState'
+import { LoadingState } from './components/LoadingState'
 import { Viewer } from './components/Viewer'
 
 type AppState =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'ready'; content: string; filePath: string }
-  | { status: 'error'; message: string; filePath: string | null }
+  | { status: 'error'; message: string; code?: MarkdownReadErrorCode; filePath: string | null }
 
 function App(): React.JSX.Element {
   const [state, setState] = useState<AppState>({ status: 'loading' })
@@ -25,9 +28,11 @@ function App(): React.JSX.Element {
         document.title = `${result.filePath.split(/[/\\]/).pop()} — MarkdownViewer`
         setState({ status: 'ready', content: result.content, filePath: result.filePath })
       } catch (error) {
+        const readError = getReadError(error)
         setState({
           status: 'error',
-          message: getReadErrorMessage(error),
+          message: readError.message,
+          code: readError.code,
           filePath
         })
       }
@@ -37,29 +42,21 @@ function App(): React.JSX.Element {
   }, [])
 
   if (state.status === 'loading') {
-    return (
-      <div className="app app--centered">
-        <p className="app-subtitle">Loading…</p>
-      </div>
-    )
+    return <LoadingState />
   }
 
   if (state.status === 'idle') {
-    return (
-      <div className="app app--centered">
-        <header className="app-header">
-          <h1>MarkdownViewer</h1>
-          <p className="app-subtitle">Open a Markdown file to get started.</p>
-          <p className="app-hint">Example: npm run dev:file README.md</p>
-        </header>
-      </div>
-    )
+    return <EmptyState />
   }
 
   if (state.status === 'error') {
     return (
       <div className="app">
-        <ErrorState message={state.message} filePath={state.filePath} />
+        <ErrorState
+          message={state.message}
+          code={state.code}
+          filePath={state.filePath}
+        />
       </div>
     )
   }
