@@ -9,6 +9,14 @@ npm install
 npm run dev
 ```
 
+Open a specific Markdown file:
+
+```bash
+npm run dev:file README.md
+```
+
+(`electron-vite` treats bare paths as its project root — use `dev:file`, or `npm run dev -- -- path/to/file.md`.)
+
 ## Build
 
 ```bash

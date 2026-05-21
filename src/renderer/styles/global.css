@@ -29,8 +29,11 @@ body {
 }
 
 .app {
-  display: flex;
   min-height: 100vh;
+}
+
+.app--centered {
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -52,8 +55,18 @@ body {
   color: #666;
 }
 
+.app-hint {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: #888;
+}
+
 @media (prefers-color-scheme: dark) {
   .app-subtitle {
     color: #aaa;
+  }
+
+  .app-hint {
+    color: #777;
   }
 }

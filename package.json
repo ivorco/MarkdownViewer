@@ -7,12 +7,16 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "electron-vite dev",
+    "dev:file": "electron-vite dev --",
     "build": "electron-vite build",
     "preview": "electron-vite preview",
+    "preview:file": "electron-vite preview --",
     "dist": "npm run build && electron-builder",
     "postinstall": "node node_modules/electron/install.js"
   },
   "dependencies": {
+    "dompurify": "^3.2.6",
+    "marked": "^15.0.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

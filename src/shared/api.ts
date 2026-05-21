@@ -3,6 +3,13 @@ export interface MarkdownFileResult {
   filePath: string
 }
 
+export type MarkdownReadErrorCode = 'NOT_FOUND' | 'NOT_MD' | 'PERMISSION' | 'READ_FAILED'
+
+export interface MarkdownReadErrorPayload {
+  code: MarkdownReadErrorCode
+  message: string
+}
+
 export interface MarkdownViewerAPI {
   readMarkdownFile(filePath: string): Promise<MarkdownFileResult>
   getInitialFilePath(): string | null
