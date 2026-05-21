@@ -1,17 +1,44 @@
 appId: com.markdownviewer.app
 productName: MarkdownViewer
+copyright: Copyright © 2026
+
 directories:
   buildResources: assets
   output: dist
+
+# Ship the Vite build only — renderer deps are bundled into out/
 files:
   - out/**/*
   - package.json
+  - '!node_modules/**/*'
+  - '!src/**/*'
+  - '!**/*.map'
+
+asar: true
+npmRebuild: false
+
 win:
   target:
     - nsis
+  executableName: MarkdownViewer
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  allowElevation: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: MarkdownViewer
+  artifactName: ${productName}-${version}-setup.${ext}
+
 mac:
   target:
     - dmg
+  category: public.app-category.productivity
+  artifactName: ${productName}-${version}.${ext}
+
 linux:
   target:
     - AppImage
+  category: Office
+  artifactName: ${productName}-${version}.${ext}

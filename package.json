@@ -12,22 +12,24 @@
     "preview": "electron-vite preview",
     "preview:file": "electron-vite preview --",
     "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
     "postinstall": "node node_modules/electron/install.js"
   },
-  "dependencies": {
-    "dompurify": "^3.2.6",
-    "marked": "^15.0.12",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "dompurify": "^3.2.6",
     "electron": "^42.2.0",
     "electron-builder": "^26.0.12",
     "electron-vite": "^3.1.0",
+    "marked": "^15.0.12",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
   }

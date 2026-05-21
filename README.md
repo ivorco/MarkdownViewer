@@ -30,7 +30,27 @@ npm run dev:file README.md
 ```bash
 npm run build    # compile main, preload, and renderer
 npm run preview  # run the production build locally
-npm run dist     # package installers (electron-builder)
+npm run dist     # package installer for the current OS
 ```
+
+Platform-specific packaging:
+
+```bash
+npm run dist:win    # Windows NSIS installer
+npm run dist:mac    # macOS disk image
+npm run dist:linux  # Linux AppImage
+```
+
+Output is written to `dist/`. On Windows you get `MarkdownViewer-0.1.0-setup.exe`.
+
+Run the installed app with a file:
+
+```bash
+"MarkdownViewer.exe" path\to\file.md
+```
+
+To open `.md` files by double-click, set MarkdownViewer as the handler for `.md` in your OS settings (the app does not register file associations automatically).
+
+Optional app icons go in [`assets/`](./assets/README.md).
 
 See [AGENTS.md](./AGENTS.md) for architecture and implementation details.
