@@ -7,7 +7,7 @@ interface MarkdownContentProps {
 }
 
 export function MarkdownContent({ content, filePath }: MarkdownContentProps): React.JSX.Element {
-  const html = useMemo(() => renderMarkdown(content), [content])
+  const html = useMemo(() => renderMarkdown(content, filePath), [content, filePath])
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     const anchor = (event.target as HTMLElement).closest('a')

@@ -23,10 +23,24 @@ export function getTabLabel(filePath: string): string {
 export function updateDocumentTitle(tabs: Tab[], activeTabId: string | null): void {
   const activeTab = tabs.find((tab) => tab.id === activeTabId)
 
-  if (!activeTab || activeTab.state.status !== 'ready') {
+  if (!activeTab) {
     document.title = 'MarkdownViewer'
     return
   }
 
-  document.title = `${getTabLabel(activeTab.state.filePath)} — MarkdownViewer`
+  const label = getTabLabel(
+    activeTab.state.status === 'ready' ? activeTab.state.filePath : activeTab.filePath
+  )
+
+  if (activeTab.state.status === 'ready') {
+    document.title = `${label} — MarkdownViewer`
+    return
+  }
+
+  if (activeTab.state.status === 'loading') {
+    document.title = `Loading ${label} — MarkdownViewer`
+    return
+  }
+
+  document.title = `${label} — MarkdownViewer`
 }

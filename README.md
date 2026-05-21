@@ -51,6 +51,12 @@ Run the installed app with a file:
 
 To open `.md` files by double-click, set MarkdownViewer as the handler for `.md` in your OS settings (the app does not register file associations automatically).
 
-Optional app icons go in [`assets/`](./assets/README.md).
+Optional app icons live in [`assets/icon.png`](./assets/icon.png) and are used for the window and installer.
+
+Try the sample document (includes a relative image):
+
+```bash
+npm run dev:file samples/example.md
+```
 
 See [AGENTS.md](./AGENTS.md) for architecture and implementation details.

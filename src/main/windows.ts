@@ -1,8 +1,24 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, nativeImage, shell } from 'electron'
+import { existsSync } from 'fs'
 import { join } from 'path'
 import { clearWindowInitialFilePath, setWindowInitialFilePath } from './ipc'
 
 const isDev = !app.isPackaged
+
+function getWindowIcon(): Electron.NativeImage | undefined {
+  const iconPaths = [
+    join(app.getAppPath(), 'assets', 'icon.png'),
+    join(process.resourcesPath, 'icon.png')
+  ]
+
+  for (const iconPath of iconPaths) {
+    if (existsSync(iconPath)) {
+      return nativeImage.createFromPath(iconPath)
+    }
+  }
+
+  return undefined
+}
 
 function getMainWindow(): BrowserWindow | null {
   const windows = BrowserWindow.getAllWindows().filter((window) => !window.isDestroyed())
@@ -22,6 +38,7 @@ function focusWindow(window: BrowserWindow): void {
 }
 
 export function createWindow(filePath?: string | null): BrowserWindow {
+  const icon = getWindowIcon()
   const window = new BrowserWindow({
     width: 960,
     height: 720,
@@ -29,6 +46,8 @@ export function createWindow(filePath?: string | null): BrowserWindow {
     minHeight: 360,
     show: false,
     autoHideMenuBar: true,
+    title: 'MarkdownViewer',
+    ...(icon ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,

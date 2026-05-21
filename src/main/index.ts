@@ -1,7 +1,10 @@
 import { app, BrowserWindow } from 'electron'
 import { getFilePathFromArgv, getStartupFilePath } from './argv'
 import { registerIpcHandlers } from './ipc'
+import { registerMarkdownResourceProtocol, registerPrivilegedSchemes } from './protocol'
 import { createWindow, focusExistingWindow, openMarkdownFile } from './windows'
+
+registerPrivilegedSchemes()
 
 const gotTheLock = app.requestSingleInstanceLock()
 
@@ -33,6 +36,7 @@ if (!gotTheLock) {
   })
 
   app.whenReady().then(() => {
+    registerMarkdownResourceProtocol()
     registerIpcHandlers()
 
     const startupPath = getStartupFilePath(process.argv, pendingOpenFilePath)

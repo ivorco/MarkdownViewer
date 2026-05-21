@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: light dark;
+}
+
 :root {
   color-scheme: light dark;
   --color-text: #1f2328;
@@ -52,6 +56,35 @@ body {
   line-height: 1.5;
   color: var(--color-text);
   background: var(--color-bg);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: rgba(9, 105, 218, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  ::selection {
+    background: rgba(68, 147, 248, 0.35);
+  }
+}
+
+* {
+  scrollbar-color: var(--color-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-subtle);
 }
 
 #root {
