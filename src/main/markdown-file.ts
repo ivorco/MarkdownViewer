@@ -16,6 +16,16 @@ export class MarkdownReadError extends Error {
 
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.markdown'])
 
+export async function canonicalizeFilePath(filePath: string): Promise<string> {
+  const resolved = path.resolve(filePath)
+
+  try {
+    return await realpath(resolved)
+  } catch {
+    return resolved
+  }
+}
+
 export async function readMarkdownFile(
   filePath: string
 ): Promise<{ content: string; filePath: string }> {

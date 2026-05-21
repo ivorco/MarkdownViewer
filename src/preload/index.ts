@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron'
 import type { MarkdownViewerAPI } from '../shared/api'
 
 const api: MarkdownViewerAPI = {
+  canonicalizeFilePath: (filePath) => ipcRenderer.invoke('canonicalize-file-path', filePath),
   readMarkdownFile: (filePath) => ipcRenderer.invoke('read-markdown-file', filePath),
   getInitialFilePath: () => ipcRenderer.sendSync('get-initial-file-path') as string | null,
   onOpenFile: (callback) => {

@@ -11,6 +11,7 @@ export interface MarkdownReadErrorPayload {
 }
 
 export interface MarkdownViewerAPI {
+  canonicalizeFilePath(filePath: string): Promise<string>
   readMarkdownFile(filePath: string): Promise<MarkdownFileResult>
   getInitialFilePath(): string | null
   onOpenFile(callback: (filePath: string) => void): () => void

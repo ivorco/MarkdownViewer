@@ -1,14 +1,27 @@
 import { ipcMain, shell } from 'electron'
-import { getFilePathFromArgv } from './argv'
-import { MarkdownReadError, readMarkdownFile } from './markdown-file'
+import { MarkdownReadError, canonicalizeFilePath, readMarkdownFile } from './markdown-file'
 
-let initialFilePath: string | null = getFilePathFromArgv()
+const windowInitialPaths = new Map<number, string>()
 
-export function getInitialFilePath(): string | null {
-  return initialFilePath
+export function setWindowInitialFilePath(webContentsId: number, filePath: string): void {
+  windowInitialPaths.set(webContentsId, filePath)
+}
+
+export function clearWindowInitialFilePath(webContentsId: number): void {
+  windowInitialPaths.delete(webContentsId)
+}
+
+function takeWindowInitialFilePath(webContentsId: number): string | null {
+  const filePath = windowInitialPaths.get(webContentsId) ?? null
+  windowInitialPaths.delete(webContentsId)
+  return filePath
 }
 
 export function registerIpcHandlers(): void {
+  ipcMain.handle('canonicalize-file-path', async (_event, filePath: string) => {
+    return canonicalizeFilePath(filePath)
+  })
+
   ipcMain.handle('read-markdown-file', async (_event, filePath: string) => {
     try {
       return await readMarkdownFile(filePath)
@@ -22,7 +35,7 @@ export function registerIpcHandlers(): void {
   })
 
   ipcMain.on('get-initial-file-path', (event) => {
-    event.returnValue = initialFilePath
+    event.returnValue = takeWindowInitialFilePath(event.sender.id)
   })
 
   ipcMain.handle('open-external', async (_event, url: string) => {

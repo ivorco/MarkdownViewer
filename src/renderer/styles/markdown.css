@@ -4,6 +4,92 @@
   height: 100vh;
 }
 
+.app--tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.tab-bar {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0;
+  overflow-x: auto;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-header);
+}
+
+.tab {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  max-width: 14rem;
+  border-right: 1px solid var(--color-border);
+  background: transparent;
+}
+
+.tab--active {
+  background: var(--color-bg);
+}
+
+.tab--error .tab__label {
+  color: var(--color-error);
+}
+
+.tab__label {
+  flex: 1;
+  min-width: 0;
+  padding: 0.625rem 0.5rem 0.625rem 0.875rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 0.8125rem;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab--active .tab__label {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.tab__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-subtle);
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tab__close:hover {
+  color: var(--color-text);
+  background: var(--color-code-bg);
+}
+
+.tab-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tab-panel--centered {
+  align-items: center;
+  justify-content: center;
+}
+
 .viewer-header {
   flex-shrink: 0;
   position: sticky;
@@ -35,6 +121,12 @@
 .viewer-content {
   flex: 1;
   overflow-y: auto;
+}
+
+.viewer-path--content {
+  max-width: 75ch;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem 0;
 }
 
 .markdown-body {
@@ -186,6 +278,12 @@
 
 .markdown-body tr:nth-child(even) td {
   background: rgba(127, 127, 127, 0.04);
+}
+
+.tab-panel .error-state {
+  min-height: auto;
+  flex: 1;
+  justify-content: center;
 }
 
 .error-state {
